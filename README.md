@@ -25,3 +25,11 @@
 <img src="https://github.com/wangqifan/dispatch/blob/master/linear.PNG" width=500>
 <br>
 对比权重不变，线性递减的收敛速度更快
+
+
+2018/4/4/二更
+-----------
+
+克服线性递减陷入局部最优的局限性采用微分递减策略
+<br>
+<img src="https://github.com/wangqifan/dispatch/blob/master/des.PNG" width=500>
