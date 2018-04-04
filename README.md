@@ -15,4 +15,7 @@
 <br>
 <img src="https://github.com/wangqifan/dispatch/blob/master/100.PNG" width=500>
 
-
+<br>
+2018/4/4/更新 采用线性惯性权重策略更新
+-----------------
+惯性权重线性递减策略目前应用最广泛，该方法使pso更好控制全局搜索和局部搜索能力，加快了收敛速度，提高了算法的性能
