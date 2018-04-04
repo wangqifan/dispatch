@@ -16,10 +16,10 @@ class  PSO():
         self.dim=dim                          #搜索维度
         self.max_iter=max_iter                #迭代次数
         self.X=np.zeros((self.pN,self.dim))   #所有粒子的位置
-        self.V=np.zeros((self.pN,self.dim))   #所以粒子的位置
+        self.V=np.zeros((self.pN,self.dim))   #所有粒子的速度
         self.pbest=np.zeros((self.pN,self.dim))#当前最佳位置
-        self.gbest=np.zeros((1,self.dim))     #全局最佳位置
-        self.p_fit=np.zeros(self.pN)          #每个个体历史最佳适应值
+        self.gbest=np.zeros((1,self.dim))      #全局最佳位置
+        self.p_fit=np.zeros(self.pN)           #每个个体历史最佳适应值
         self.fit=1e10;
 
     #-----------目标函数----------
@@ -44,7 +44,8 @@ class  PSO():
                 self.fit=tmp
                 self.gbest=self.X[i]
 
-
+    def getweightoflinear(self,i):
+        self.w=self.w-i*(0.8-0.4)/self.max_iter
 
     #--------------更新粒子位置-------
     def iterator(self):
@@ -58,7 +59,7 @@ class  PSO():
                     if self.p_fit[i]<self.fit:
                         self.gbest=self.X[i]
                         self.fit=self.p_fit[i]
-
+            self.getweightoflinear(t)
             for i in range(self.pN):
                 self.V[i]=self.w*self.V[i]+self.c1*self.r1*(self.pbest[i]-self.X[i])+self.c2*self.r2*(self.gbest-self.X[i])
                 self.X[i]=self.X[i]+self.V[i]
