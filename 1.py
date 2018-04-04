@@ -44,9 +44,14 @@ class  PSO():
                 self.fit=tmp
                 self.gbest=self.X[i]
 
+    #-----------线性递减策略---------
     def getweightoflinear(self,i):
         self.w=self.w-i*(0.8-0.4)/self.max_iter
-
+    #----------线性微分递减策略-------
+    def getweightofder(self,i):
+        wstart=0.8
+        wend=0.4
+        self.w=wstart-(wstart-wend)/(self.max_iter*self.max_iter)*i*i
     #--------------更新粒子位置-------
     def iterator(self):
         fitness=[]
@@ -59,7 +64,8 @@ class  PSO():
                     if self.p_fit[i]<self.fit:
                         self.gbest=self.X[i]
                         self.fit=self.p_fit[i]
-            self.getweightoflinear(t)
+            #self.getweightoflinear(t)
+            self.getweightofder(t)
             for i in range(self.pN):
                 self.V[i]=self.w*self.V[i]+self.c1*self.r1*(self.pbest[i]-self.X[i])+self.c2*self.r2*(self.gbest-self.X[i])
                 self.X[i]=self.X[i]+self.V[i]
