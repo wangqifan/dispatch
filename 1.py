@@ -82,7 +82,7 @@ def run():
     plt.title("图1")
     plt.xlabel("iterators",size=14)
     plt.ylabel("fitness",size=14)
-    t=np.array([t for t in  range(0,20)])
+    t=np.array([t for t in  range(0,my_pso.max_iter)])
     fitness=np.array(fitness)
     print(len(t),"   ",len(fitness))
     plt.plot(t,fitness,color='b',linewidth=3)
