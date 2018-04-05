@@ -60,6 +60,19 @@ class  PSO():
         tend=0.4
         k=3.0
         self.w=math.exp(-k*pow(i/self.max_iter,2))*(tmax-tend)+tend
+
+
+    #-----------学习因子修改-----
+    def getweightofstudy(self,i):
+        cstart=2.5
+        cend=0.5;
+        self.c1=cstart+(cstart-cend)*i/self.max_iter
+        self.c2=cstart-self.c1
+
+    #------------修改参数-----
+    def parameterchange(self,i):
+        self.getpsoniw(i)
+        self.getweightofstudy(i)
     #--------------更新粒子位置-------
     def iterator(self):
         fitness=[]
@@ -72,9 +85,7 @@ class  PSO():
                     if self.p_fit[i]<self.fit:
                         self.gbest=self.X[i]
                         self.fit=self.p_fit[i]
-            #self.getweightoflinear(t)
-            #self.getweightofder(t)
-            self.getpsoniw(t)
+            self.parameterchange(i)
             for i in range(self.pN):
                 self.V[i]=self.w*self.V[i]+self.c1*self.r1*(self.pbest[i]-self.X[i])+self.c2*self.r2*(self.gbest-self.X[i])
                 self.X[i]=self.X[i]+self.V[i]

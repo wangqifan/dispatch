@@ -1,9 +1,16 @@
 # dispatch
 
+
+2018/4/5/学习因子线性修改
+------------
+
+学习因子c1,c2决定了粒子本身经验和群体经验对粒子运动轨迹影响，C1先大后小，C2先小后大。基本思想参考前期主要靠粒子本身的历史信息，后期更加注重社会信息。<br>
+<img src="https://github.com/wangqifan/dispatch/blob/master/studychange.png" width=500>
+
 2018/4/5/采用非线性惯性权重策略
 ------------
 
-针对pso算法使用时线性递减容易陷入局部最优，采用一种非线性动态惯性权重方法
+针对pso算法使用时线性递减容易陷入局部最优，采用一种非线性动态惯性权重方法<br>
 <img  src="https://github.com/wangqifan/dispatch/blob/master/psoniw.png" width=500>
 
 2018/4/4/二更
