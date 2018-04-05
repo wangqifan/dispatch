@@ -1,5 +1,10 @@
 # dispatch
 
+2018/4/5/采用非线性惯性权重策略
+------------
+
+针对pso算法使用时线性递减容易陷入局部最优，采用一种非线性动态惯性权重方法
+<img  src="https://github.com/wangqifan/dispatch/blob/master/psoniw.png" width=500>
 
 2018/4/4/二更
 -----------

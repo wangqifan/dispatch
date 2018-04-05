@@ -1,6 +1,7 @@
 import numpy as np
 import random
 import matplotlib.pyplot as plt
+import math
 
 
 #---------------pos-----------参数设置
@@ -53,11 +54,12 @@ class  PSO():
         wend=0.4
         self.w=wstart-(wstart-wend)/(self.max_iter*self.max_iter)*i*i
 
-    #-----------PSO_LIW----------
-    def getpsoliw(self,i):
+    #-----------PSO_NIW----------
+    def getpsoniw(self,i):
         tmax=0.8
         tend=0.4
-        self.w=(self.max_iter-i)/self.max_iter*(tmax-tend)+tend
+        k=3.0
+        self.w=math.exp(-k*pow(i/self.max_iter,2))*(tmax-tend)+tend
     #--------------更新粒子位置-------
     def iterator(self):
         fitness=[]
@@ -72,7 +74,7 @@ class  PSO():
                         self.fit=self.p_fit[i]
             #self.getweightoflinear(t)
             #self.getweightofder(t)
-            self.getpsoliw(t)
+            self.getpsoniw(t)
             for i in range(self.pN):
                 self.V[i]=self.w*self.V[i]+self.c1*self.r1*(self.pbest[i]-self.X[i])+self.c2*self.r2*(self.gbest-self.X[i])
                 self.X[i]=self.X[i]+self.V[i]
@@ -86,7 +88,7 @@ def run():
     fitness=my_pso.iterator()
 
     plt.figure(1)
-    plt.title("图1")
+    plt.title("1")
     plt.xlabel("iterators",size=14)
     plt.ylabel("fitness",size=14)
     t=np.array([t for t in  range(0,my_pso.max_iter)])
