@@ -1,5 +1,9 @@
 # dispatch
 
+2018/4/6/粒子中间状态可视化
+------------
+
+<img src="https://github.com/wangqifan/dispatch/blob/master/1.gif" width=500>
 
 2018/4/5/学习因子线性修改
 ------------
