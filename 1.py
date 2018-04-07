@@ -49,8 +49,8 @@ class  PSO():
     def init_population(self):
         for i  in range(self.pN):
             for j in range(self.dim):
-                self.X[i][j]=random.uniform(0,1)
-                self.V[i][j]=random.uniform(0,1)
+                self.X[i][j]=random.uniform(-1,1)
+                self.V[i][j]=random.uniform(-1,1)
             self.pbest[i]=self.X[i]
             tmp=self.function(self.X[i])
             self.p_fit[i]=tmp
@@ -77,7 +77,7 @@ class  PSO():
     def getweightofstudy(self,i):
         cstart=2.5
         cend=0.5;
-        self.c1=cstart+(cstart-cend)*i/self.max_iter
+        self.c1=cstart+(cend-cstart)*i/self.max_iter
         self.c2=cstart-self.c1
 
     #------------修改参数-----
