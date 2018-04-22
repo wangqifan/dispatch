@@ -11,7 +11,7 @@ class  PSO():
         self.c1=2
         self.c2=2
         self.r1=0.6
-        self.r2=0.3
+        self.r2=0.6
         self.pN=PN                            #粒子数量
         self.dim=dim                          #搜索维度
         self.max_iter=max_iter                #迭代次数
@@ -108,19 +108,19 @@ class  PSO():
         for i  in range(self.pN):
             for j in range(self.dim):
                 self.X[i][j]=100+random.randint(-10,10)
-                self.V[i][j]=random.uniform(-0.1,0.1)
+                self.V[i][j]=random.uniform(-1,1)
             self.pbest[i]=self.X[i]
             tmp=self.fitnessFunc(self.X[i])
             self.p_fit[i]=tmp
             if self.isvaild(self.X[i]) and tmp<self.fit:
                 self.fit=tmp
                 self.gbest=self.X[i]
-        self.cleardata()
+       # self.cleardata()
 
     #-----------PSO_NIW----------
     def getpsoniw(self,i):
         tmax=0.8
-        tend=0.2
+        tend=0.4
         k=3.0
         self.w=math.exp(-k*pow(i/self.max_iter,2))*(tmax-tend)+tend
     #-----------学习因子修改-----
@@ -134,33 +134,50 @@ class  PSO():
     def parameterchange(self,i):
         self.getpsoniw(i)
         self.getweightofstudy(i)
+    #---------散点图----
+    def scatter(self, i):
+        plt.figure(i)
+        color = ['r', 'y', 'k', 'g', 'm']
+        plt.xlim((70, 130))
+        plt.ylim((70, 130))
+        plt.xlabel("x", size=14)
+        plt.ylabel("y", size=14)
+        plt.scatter(self.X[:, 0], self.X[:, 1], c=color, linewidths=1)
+        plt.savefig(str(i) + ".png")
+        plt.close('all')
 
     #--------------更新粒子位置-------
     def iterator(self):
         fitness=[]
         for t in range(self.max_iter):    #更新gbest pbest
-            self.cleardata()
+            #self.cleardata()
             print(self.pN)#清洗数据
             print(self.gbest)
             print(self.isvaild(self.gbest))
             for i  in range(self.pN):
                 #temp=self.function(self.X[i])
+                if not self.isvaild(self.X[i]):
+                    continue
                 temp=self.fitnessFunc(self.X[i])
-                if temp<self.p_fit[i] and self.isvaild(self.X[i]):
+                if temp<self.p_fit[i]:
                     self.p_fit[i]=temp
                     self.pbest[i]=self.X[i]
                     if self.p_fit[i]<self.fit:
                         self.gbest=self.X[i]
                         self.fit=self.p_fit[i]
             self.parameterchange(t)
+            self.scatter(t)
             for i in range(self.pN):
-                self.V[i]=self.w*self.V[i]+self.c1*self.r1*(self.pbest[i]-self.X[i])+self.c2*self.r2*(self.gbest-self.X[i])
+                if not self.isvaild(self.X[i]):
+                    self.V[i] =self.c2 * self.r2 * (self.gbest - self.X[i])
+                else:
+                    self.V[i]=self.w*self.V[i]+self.c1*self.r1*(self.pbest[i]-self.X[i])+self.c2*self.r2*(self.gbest-self.X[i])
                 self.X[i]=self.X[i]+self.V[i]
             fitness.append(self.fit)
         return fitness
 #---------------------程序执行----------
 def run():
-    my_pso=PSO(PN=10000,dim=8,max_iter=30)
+    my_pso=PSO(PN=20,dim=8,max_iter=20)
     my_pso.init_population()
     fitness=my_pso.iterator()
     plt.figure(1)
